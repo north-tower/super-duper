@@ -116,7 +116,7 @@ export default function AccountForm({ user }: { user: User | null }) {
         setAvatarUrl(url)
         updateProfile({ fullname, username, website, avatar_url: url })
       }}
-    />
+      />
 
       <div>
         <button

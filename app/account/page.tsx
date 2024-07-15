@@ -1,4 +1,4 @@
-import AccountForm from '@/component/AccountForm'
+import AccountForm from '@/components/AccountForm'
 import { createClient } from '@/utlis/supabase/server'
 
 
