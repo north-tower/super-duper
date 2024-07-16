@@ -1,6 +1,4 @@
-'use client'
 import { useCallback, useEffect, useState } from 'react'
-
 import { type User } from '@supabase/supabase-js'
 import { createClient } from '@/utlis/supabase/client'
 import Avatar from './Avatar'
@@ -11,7 +9,7 @@ export default function AccountForm({ user }: { user: User | null }) {
   const [fullname, setFullname] = useState<string | null>(null)
   const [username, setUsername] = useState<string | null>(null)
   const [website, setWebsite] = useState<string | null>(null)
-  const [avatar_url, setAvatarUrl] = useState<string | null>(null)
+  const [avatars, setAvatars] = useState<string[]>([])
 
   const getProfile = useCallback(async () => {
     try {
@@ -19,7 +17,7 @@ export default function AccountForm({ user }: { user: User | null }) {
 
       const { data, error, status } = await supabase
         .from('profiles')
-        .select(`full_name, username, website, avatar_url`)
+        .select(`full_name, username, website, avatars`)
         .eq('id', user?.id)
         .single()
 
@@ -32,7 +30,7 @@ export default function AccountForm({ user }: { user: User | null }) {
         setFullname(data.full_name)
         setUsername(data.username)
         setWebsite(data.website)
-        setAvatarUrl(data.avatar_url)
+        setAvatars(data.avatars || [])
       }
     } catch (error) {
       alert('Error loading user data!')
@@ -48,12 +46,12 @@ export default function AccountForm({ user }: { user: User | null }) {
   async function updateProfile({
     username,
     website,
-    avatar_url,
+    avatars,
   }: {
     username: string | null
     fullname: string | null
     website: string | null
-    avatar_url: string | null
+    avatars: string[]
   }) {
     try {
       setLoading(true)
@@ -63,7 +61,7 @@ export default function AccountForm({ user }: { user: User | null }) {
         full_name: fullname,
         username,
         website,
-        avatar_url,
+        avatars,
         updated_at: new Date().toISOString(),
       })
       if (error) throw error
@@ -73,6 +71,11 @@ export default function AccountForm({ user }: { user: User | null }) {
     } finally {
       setLoading(false)
     }
+  }
+
+  const handleUpload = (url: string) => {
+    setAvatars([...avatars, url])
+    updateProfile({ fullname, username, website, avatars: [...avatars, url] })
   }
 
   return (
@@ -108,20 +111,26 @@ export default function AccountForm({ user }: { user: User | null }) {
           onChange={(e) => setWebsite(e.target.value)}
         />
       </div>
+      {avatars.map((avatar, index) => (
+        <Avatar
+          key={index}
+          uid={user?.id ?? null}
+          url={avatar}
+          size={150}
+          onUpload={handleUpload}
+        />
+      ))}
       <Avatar
-      uid={user?.id ?? null}
-      url={avatar_url}
-      size={150}
-      onUpload={(url) => {
-        setAvatarUrl(url)
-        updateProfile({ fullname, username, website, avatar_url: url })
-      }}
+        uid={user?.id ?? null}
+        url={null}
+        size={150}
+        onUpload={handleUpload}
       />
 
       <div>
         <button
           className="button primary block"
-          onClick={() => updateProfile({ fullname, username, website, avatar_url })}
+          onClick={() => updateProfile({ fullname, username, website, avatars })}
           disabled={loading}
         >
           {loading ? 'Loading ...' : 'Update'}
