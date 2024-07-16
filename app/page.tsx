@@ -1,4 +1,4 @@
-import React from 'react'
+import { login } from "@/serverActions"
 
 function page() {
   return (
@@ -20,16 +20,26 @@ function page() {
     <p className="mb-1 font-medium text-gray-500">Email</p>
     <div className="mb-4 flex flex-col">
       <div className="focus-within:border-blue-600 relativeflex overflow-hidden rounded-md border-2 transition sm:w-80 lg:w-full">
-        <input type="email" id="signup-email" className="w-full border-gray-300 bg-white px-4 py-2 text-base text-gray-700 placeholder-gray-400 focus:outline-none" placeholder="Enter your email" />
+        <input  id="email" name="email" type="email" required 
+        className="w-full border-gray-300 bg-white px-4 
+        py-2 text-base text-gray-700 placeholder-gray-400 
+        focus:outline-none" placeholder="Enter your email" />
       </div>
     </div>
     <p className="mb-1 font-medium text-gray-500">Password</p>
     <div className="mb-4 flex flex-col">
       <div className="focus-within:border-blue-600 relative flex overflow-hidden rounded-md border-2 transition sm:w-80 lg:w-full">
-        <input type="password" id="signup-password" className="w-full border-gray-300 bg-white px-4 py-2 text-base text-gray-700 placeholder-gray-400 focus:outline-none" placeholder="Choose a password (minimum 8 characters)" />
+        <input id="password" name="password" type="password" required
+         className="w-full border-gray-300 bg-white px-4 py-2 
+         text-base text-gray-700 placeholder-gray-400 
+         focus:outline-none" 
+         placeholder="Choose a password (minimum 8 characters)" />
       </div>
     </div>
-    <button className="hover:shadow-blue-600/40 rounded-xl bg-gradient-to-r from-blue-700 to-blue-600 px-8 py-3 font-bold text-white transition-all hover:opacity-90 hover:shadow-lg">Sign Up</button>
+    <button formAction={login} className="hover:shadow-blue-600/40 rounded-xl
+     bg-gradient-to-r from-blue-700 to-blue-600 px-8 py-3 
+     font-bold text-white transition-all hover:opacity-90 
+     hover:shadow-lg">Sign Up</button>
   </div>
 </div>
 
