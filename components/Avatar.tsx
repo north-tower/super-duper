@@ -65,7 +65,10 @@ export default function Avatar({
 
   return (
     <div>
-      {avatarUrl ? (
+        <img className='border h-80 w-80 object-contain'
+                src={avatarUrl || "https://links.papareact.com/ucj"} alt='marketplace-logo' 
+                />
+      {/* {avatarUrl ? (
         <Image
           width={size}
           height={size}
@@ -74,11 +77,14 @@ export default function Avatar({
           className="avatar image"
           style={{ height: size, width: size }}
         />
+        
       ) : (
         <div className="avatar no-image" style={{ height: size, width: size }} />
-      )}
+      )} */}
       <div style={{ width: size }}>
-        <label className="button primary block" htmlFor="single">
+        <label className='bg-green-600 font-bold 
+                    text-white rounded-full py-4 px-10 w-56  
+                    md:mt-auto mx-auto md:ml-auto cursor-pointer' htmlFor="single">
           {uploading ? 'Uploading ...' : 'Upload'}
         </label>
         <input
