@@ -12,6 +12,7 @@ export default function AccountForm({ user }: { user: User | null }) {
   const [username, setUsername] = useState<string | null>(null)
   const [website, setWebsite] = useState<string | null>(null)
   const [avatar_url, setAvatarUrl] = useState<string | null>(null)
+  const [preview, setPreview] = useState<string>();
 
   const getProfile = useCallback(async () => {
     try {
@@ -137,6 +138,19 @@ export default function AccountForm({ user }: { user: User | null }) {
           </button>
         </form>
       </div>
+      <main className='max-w-6xl mx-auto p-10 border'>
+            <h1 className='text-4xl font-bold'>Add an Item to the Marketplace</h1>
+            <h2 className='text-xl font-semibold pt-5'>Item Details</h2>
+            <p className='pb-5'>
+                By adding an item to the marketplace, youre essentially Minting an 
+                NFT of the item into your wallet which we can then list for sale!
+            </p>
+            <div className='flex flex-col justify pt-5 '>
+                <img className='border h-80 w-80 object-contain'
+                src={preview || "https://links.papareact.com/ucj"} alt='marketplace-logo' 
+                />
+</div>
+            </main>
     </div>
   )
 }
