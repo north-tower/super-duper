@@ -149,9 +149,26 @@ export default function AccountForm({ user }: { user: User | null }) {
                 NFT of the item into your wallet which we can then list for sale!
             </p>
             <div className='flex flex-col justify pt-5 '>
-                <img className='border h-80 w-80 object-contain'
-                src={preview || "https://links.papareact.com/ucj"} alt='marketplace-logo' 
-                />
+               <Avatar  uid={user?.id ?? null}
+      url={avatar_url}
+      size={150}
+      onUpload={(url) => {
+        setAvatarUrl(url)
+        updateProfile({ fullname, username, website, avatar_url: url })
+      }} />
+                 <form  className='flex flex-col flex-1 p-2 space-y-2'>
+                    <label className='font-light'>Name of Item</label>
+                    <input className='border-2 border-gray-300 bg-white h-10 px-5 pr-16 rounded-lg text-sm outline-none'
+                    name='name'
+                    id='name'
+                     placeholder='Name of item...' type='text' />
+
+                    <label className='font-light'>Description</label>
+                    <input className='border-2 border-gray-300 bg-white h-10 px-5 pr-16 rounded-lg text-sm outline-none' 
+                    name='description'
+                    id='description'
+                    placeholder="Enter Description..." type='text' />
+                    </form>
 </div>
             </main>
     </div>
