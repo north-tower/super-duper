@@ -141,7 +141,7 @@ export default function AccountForm({ user }: { user: User | null }) {
       </div>
      
       <main className='max-w-6xl mx-auto p-10 border'>
-      <ProfileCard fullName={fullname} email={user?.email} />
+      <ProfileCard fullName={fullname} email={user?.email} website={website} />
             <h1 className='text-4xl font-bold'>Add an Item to the Marketplace</h1>
             <h2 className='text-xl font-semibold pt-5'>Item Details</h2>
             <p className='pb-5'>
