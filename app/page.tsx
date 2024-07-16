@@ -18,6 +18,7 @@ function page() {
     <a href="#" className="mb-10 block font-bold text-gray-600">Have an account</a>
     
     <p className="mb-1 font-medium text-gray-500">Email</p>
+    <form>
     <div className="mb-4 flex flex-col">
       <div className="focus-within:border-blue-600 relativeflex overflow-hidden rounded-md border-2 transition sm:w-80 lg:w-full">
         <input  id="email" name="email" type="email" required 
@@ -40,6 +41,7 @@ function page() {
      bg-gradient-to-r from-blue-700 to-blue-600 px-8 py-3 
      font-bold text-white transition-all hover:opacity-90 
      hover:shadow-lg">Sign Up</button>
+     </form>
   </div>
 </div>
 
