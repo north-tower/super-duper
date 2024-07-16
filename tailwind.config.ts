@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss"
 
 const config = {
@@ -20,7 +19,6 @@ const config = {
     },
     extend: {
       colors: {
-        walmart: "#0171DC",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
