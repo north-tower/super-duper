@@ -50,7 +50,7 @@ export default function Avatar({
       const filePath = `${uid}-${Math.random()}.${fileExt}`
 
       const { error: uploadError } = await supabase.storage.from('avatars').upload(filePath, file)
-
+    
       if (uploadError) {
         throw uploadError
       }
@@ -81,7 +81,7 @@ export default function Avatar({
       ) : (
         <div className="avatar no-image" style={{ height: size, width: size }} />
       )} */}
-      <div style={{ width: size }}>
+      <div style={{ width: size }} className='p-4'>
         <label className='bg-green-600 font-bold 
                     text-white rounded-full py-4 px-10 w-56  
                     md:mt-auto mx-auto md:ml-auto cursor-pointer' htmlFor="single">
