@@ -1,6 +1,21 @@
 import { login } from "@/serverActions"
+import { createClient } from '@/utlis/supabase/server'
 
-function page() {
+import { redirect } from 'next/navigation'
+
+
+async function page() {
+  const supabase = createClient();
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
+
+
+  if (user) {
+    redirect('/home')  // Replace '/dashboard' with the desired redirect URL
+  }
+
   return (
     <div>
       <div className="mx-auto flex h-screen max-w-lg flex-col md:max-w-none md:flex-row md:pr-10">
