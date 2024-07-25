@@ -12,13 +12,8 @@ export default async function Account() {
 
   return (
     <>
-      <Header />
       <AccountForm user={user} />
-
     </>
-
-
-
   )
   
   

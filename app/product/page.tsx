@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import { Organic, Specification } from "@/typings/searchTypings"; // Adjust the import path as necessary
 import {
@@ -17,8 +19,20 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import AddToCart from "@/components/AddToCart";
+import { useCallback, useEffect, useState } from "react";
+import { createClient } from "@/utlis/supabase/client";
 
 function ProductPage() {
+  const supabase = createClient();
+  const [fullname, setFullname] = useState<string | null>(null);
+  const [username, setUsername] = useState<string | null>(null);
+  const [website, setWebsite] = useState<string | null>(null);
+  const [avatar_url, setAvatarUrl] = useState<string | null>(null);
+  const [name, setName] = useState<string | null>(null);
+  const [description, setDescription] = useState<string | null>(null);
+
+  const [loading, setLoading] = useState(true);
+
   const product: Organic = {
     url: "sample-url",
     images: [
@@ -39,11 +53,48 @@ function ProductPage() {
       { key: "Size", value: "3 inch" },
       // Add more specifications as needed
     ],
-    meta: "100"
+    meta: "100",
   };
 
+  const getProfile = useCallback(async () => {
+    try {
+      setLoading(true);
+
+      const { data, error, status } = await supabase
+        .from("market")
+        .select(`full_name, username, website, avatar_url, name, description`)
+        .single();
+
+      console.log('Data:', data);
+      console.log('Error:', error);
+
+      if (error && status !== 406) {
+        throw error;
+      }
+
+      if (data) {
+        setFullname(data.full_name);
+        setUsername(data.username);
+        setWebsite(data.website);
+        setAvatarUrl(data.avatar_url);
+        setName(data.name);
+        setDescription(data.description);
+      }
+    } catch (error) {
+      console.error('Error loading user data!', error);
+    } finally {
+      setLoading(false);
+    }
+  }, [supabase]);
+
+  useEffect(() => {
+    getProfile();
+  }, [getProfile]);
+
+  console.log('Fullname:', fullname);
   return (
     <div className="p-4 lg:p-10 flex flex-col lg:flex-row w-full">
+   
       <div className="hidden lg:inline space-y-4">
         {product.images.map((image, i) => (
           <Image
@@ -99,9 +150,10 @@ function ProductPage() {
           className="py-5"
         />
 
-        <p className="text-yellow-500 text-sm">{product.rating} *
-        <span className="text-gray-400 ml-2">reviews</span>
-          </p>
+        <p className="text-yellow-500 text-sm">
+          {product.rating} *
+          <span className="text-gray-400 ml-2">reviews</span>
+        </p>
         <p className="text-2xl font-bold mt2">KES{product.price}</p>
 
         <AddToCart product={product} />
@@ -120,7 +172,7 @@ function ProductPage() {
             {product.specifications.map((spec, i) => (
               <TableRow key={i}>
                 <TableCell className="font-bold">{spec.key}</TableCell>
-                <TableCell >{spec.value}</TableCell>
+                <TableCell>{spec.value}</TableCell>
               </TableRow>
             ))}
           </TableBody>
